@@ -1,3 +1,4 @@
+import { reactive } from "vue";
 export interface Rgb {
     r: number;
     g: number;
@@ -11,10 +12,10 @@ export interface PixelData {
     rangeId?: number;
 }
 
-export function createPixel(position: number): PixelData {
-    return {
+export function createPixel(position: number) {
+    return reactive<PixelData>({
         position,
-        color: { r: 0, g: 0, b: 0 },
         selected: false,
-    };
+        color: { r: 0, g: 0, b: 0 },
+    });
 }

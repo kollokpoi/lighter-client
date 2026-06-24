@@ -1,11 +1,11 @@
-import type { Pixel, rgb } from "../pixel";
+import type { PixelData, Rgb } from "../pixel";
 import { BaseEffect, type RenderResult } from "./BaseEffect";
 
 export class RainbowEffect extends BaseEffect {
     private hueStart = 0;
     private deltaHue = 7;
 
-    public render(pixels: Pixel[], from: number, to: number, time: number): RenderResult {
+    public render(pixels: PixelData[], from: number, to: number, time: number): RenderResult {
         const baseHue = (this.hueStart + (time * this.speed) / 256) % 256;
 
         for (let i = from; i <= to && i < pixels.length; i++) {
@@ -14,14 +14,14 @@ export class RainbowEffect extends BaseEffect {
 
             const hue = (baseHue + (i - from) * this.deltaHue) % 256;
             const rgb = this.hsvToRgb(hue, 255, this.intensity);
-            pixel.setColor(rgb);
+            pixel.color = rgb;
         }
 
         this.lastUpdate = time;
         return { changed: true, pixelActive: true };
     }
 
-    private hsvToRgb(h: number, s: number, v: number): rgb {
+    private hsvToRgb(h: number, s: number, v: number): Rgb {
         if (s === 0) {
             return { r: v, g: v, b: v };
         }

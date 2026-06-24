@@ -1,20 +1,26 @@
 <template>
   <div
     class="pixel"
+    v-if="pixel"
     :style="{
       backgroundColor: `rgb(${pixel.color.r}, ${pixel.color.g}, ${pixel.color.b})`,
     }"
-  >
-
-  </div>
+  />
 </template>
+
 <script lang="ts" setup>
-import type { PixelData } from "../types/pixel";
-defineProps<{ pixel: PixelData }>();
+import { computed } from "vue";
+import { usePixelsStore } from "../stores/pixelsStore";
+
+const props = defineProps<{ position: number }>();
+const pixelsStore = usePixelsStore();
+
+const pixel = computed(() => pixelsStore.pixelById(props.position));
 </script>
 <style scoped>
 .pixel {
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
+  display: block;
 }
 </style>
