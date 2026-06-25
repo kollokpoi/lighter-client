@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { usePixelsStore } from "../stores/pixelsStore";
+import { usePixelsStore } from "../stores/ledStore";
 
 const props = defineProps<{ position: number }>();
 const pixelsStore = usePixelsStore();

@@ -7,25 +7,20 @@ export class BreathEffect extends BaseEffect {
         super();
         this.color = color || { r: 255, g: 0, b: 0 };
     }
-    
-    public render(pixels: PixelData[], from: number, to: number, time: number): RenderResult {
+
+    public render(pixels: PixelData[], from: number, to: number, time: number, baseColor?: Rgb): RenderResult {
         const multiplier = this.getMultiplier(time);
 
         for (let i = from; i <= to && i < pixels.length; i++) {
             const pixel = pixels[i];
             if (!pixel) continue;
 
-            const currentColor = pixel.color;
 
-            if (currentColor.r === 0 && currentColor.g === 0 && currentColor.b === 0) {
-                pixel.color.r = Math.round(this.color.r * multiplier / 255);
-                pixel.color.g = Math.round(this.color.g * multiplier / 255);
-                pixel.color.b = Math.round(this.color.b * multiplier / 255);
-            } else {
-                pixel.color.r = Math.round(currentColor.r * multiplier / 255);
-                pixel.color.g = Math.round(currentColor.g * multiplier / 255);
-                pixel.color.b = Math.round(currentColor.b * multiplier / 255);
-            }
+            const color = baseColor ?? this.color;
+
+            pixel.color.r = Math.round(color.r * multiplier / 255);
+            pixel.color.g = Math.round(color.g * multiplier / 255);
+            pixel.color.b = Math.round(color.b * multiplier / 255);
         }
 
         this.lastUpdate = time;

@@ -1,5 +1,4 @@
-import usePixelsStore from "./pixelsStore";
+import useLedStore from "./ledStore";
 import usePreferencesStore from "./preferencesStore";
-import useRangeStore from "./rangeStore";
 
-export { usePixelsStore, usePreferencesStore, useRangeStore };
+export { useLedStore, usePreferencesStore };

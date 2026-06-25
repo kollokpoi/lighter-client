@@ -5,7 +5,7 @@ export type RenderResult = {
     pixelActive: boolean;
 };
 
-export class BaseEffect {
+export abstract class BaseEffect {
     protected startTime: number = 0;
     protected lastUpdate: number = 0;
     protected speed: number = 128;
@@ -14,10 +14,7 @@ export class BaseEffect {
     protected color: Rgb = { r: 0, g: 0, b: 0 }
 
     public init(time: number): void { this.startTime = time; this.lastUpdate = time }
-    public render(pixels: PixelData[], from: number, to: number, time: number): RenderResult {
-        return { changed: true, pixelActive: true };
-    }
-
+    public abstract render(pixels: PixelData[], from: number, to: number, time: number, baseColor?: Rgb): RenderResult
     public setSpeed = (speed: number): void => { this.speed = speed }
     public setIntensity = (intensity: number): void => { this.intensity = intensity }
     public setTransparent = (transparent: boolean): void => { this.transparent = transparent }
