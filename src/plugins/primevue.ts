@@ -2,6 +2,7 @@ import PrimeVue from "primevue/config";
 import MyPreset from "./primeVuePreset.ts";
 
 import Select from 'primevue/select';
+import Slider from 'primevue/slider'
 
 import ConfirmationService from "primevue/confirmationservice";
 import ToastService from "primevue/toastservice";
@@ -26,6 +27,6 @@ export default {
     app.use(ToastService);
     app.use(ConfirmationService);
     app.component("Select", Select);
-
+    app.component("Slider", Slider);
   },
 };

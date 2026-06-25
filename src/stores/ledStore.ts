@@ -26,6 +26,7 @@ const useLedStore = defineStore("led", () => {
     }
 
     function addRange(range: Range) {
+        range.id = ranges.value.length;
         ranges.value.push(range);
     }
 
@@ -35,6 +36,7 @@ const useLedStore = defineStore("led", () => {
 
     function updateRange(id: number, updates: Partial<Range>) {
         const range = ranges.value.find(r => r.id === id);
+        console.log(ranges.value, id)
         if (range) Object.assign(range, updates);
     }
 
@@ -43,6 +45,11 @@ const useLedStore = defineStore("led", () => {
     }
 
     function renderFrame(now: number) {
+        for (const p of pixels.value) {
+            p.color.r = 0;
+            p.color.g = 0;
+            p.color.b = 0;
+        }
         const sorted = rangesByLayer.value;
         for (const range of sorted) {
             range.effect.render(pixels.value, range.start, range.end, now, range.effect.getColor());
