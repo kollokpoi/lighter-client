@@ -28,11 +28,21 @@
           <Pixel v-for="pixel in leftPixels" :key="pixel.position" :position="pixel.position" />
         </div>
         <div class="flex-1 p-5">
-          <Slider @change="(value:any)=>{
-            ledStore.updateRange(0, {end: value})
-          }" :min="0" :max="ledStore.pixels.length"/>
+          <div class="w-full flex flex-col gap-5">
+            <div v-for="range in ledStore.ranges" :key="range.id">
+              <p>{{ range.id }}</p>
+              <Slider v-model="range.start" @change="(value: any) => {
+                ledStore.updateRange(range.id, { start: value })
+              }" :min="0" :max="ledStore.pixels.length" />
+              <Slider class="mt-3" v-model="range.end" @change="(value: any) => {
+                ledStore.updateRange(range.id, { end: value })
+              }" :min="0" :max="ledStore.pixels.length" />
+            </div>
+          </div>
+
+
         </div>
-        <div class="h-full w-4 flex ">
+        <div class="h-full w-4 flex flex-col">
           <Pixel v-for="pixel in rightPixels" :key="pixel.position" :position="pixel.position" />
         </div>
       </div>
@@ -48,6 +58,7 @@ import { usePreferencesStore, useLedStore } from "@/stores";
 import { getLightEffectOptions, getSelectModeOptions } from "@/helpers";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import Pixel from "@/components/Pixel.vue";
+import { Range } from "@/types/range";
 import { StaticEffect, RainbowEffect, BreathEffect } from "@/types/effects/";
 
 const pixelsHolder = ref<HTMLDivElement>();
@@ -104,21 +115,15 @@ function onResize() {
 
 onMounted(() => {
   ledStore.init(250);
-  ledStore.addRange({
-    id: 1,
-    start: 0,
-    end: 200,
-    layer: 0,
-    active: true,
-    effect: new BreathEffect({ r: 255, g: 0, b: 0 }),
-    pixels: [],
-  });
+  ledStore.addRange(new Range(0, 0, 50, 1, new RainbowEffect()));
   animFrameId = requestAnimationFrame(loop);
+  window.addEventListener('mouseup', preferences.onMouseUp);
   window.addEventListener('resize', onResize)
 });
 
 onUnmounted(() => {
   cancelAnimationFrame(animFrameId);
+  window.removeEventListener('mouseup', preferences.onMouseUp);
   window.removeEventListener('resize', onResize)
 });
 

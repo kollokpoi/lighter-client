@@ -9,7 +9,8 @@ export interface PixelData {
     position: number;
     color: Rgb;
     selected: boolean;
-    rangeId?: number;
+    active: boolean;
+    lastDragTime: number;
 }
 
 export function createPixel(position: number) {
@@ -17,5 +18,7 @@ export function createPixel(position: number) {
         position,
         selected: false,
         color: { r: 0, g: 0, b: 0 },
+        active: false,
+        lastDragTime: -1,
     });
 }
