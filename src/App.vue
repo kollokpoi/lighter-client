@@ -21,33 +21,28 @@
     </div>
     <div class="flex-1 w-full flex flex-col" ref="pixelsHolder">
       <div class="w-full h-4 flex">
-        <Pixel v-for="pixel in topPixels" :key="pixel.position" :position="pixel.position" />
+        <Pixel v-for="pixel in topPixels" :key="pixel.position" :position="pixel.position" :isHorizontal="true" :isReversed="false" />
       </div>
       <div class="flex w-full flex-1 justify-between items-center">
         <div class="h-full w-4 flex flex-col-reverse">
-          <Pixel v-for="pixel in leftPixels" :key="pixel.position" :position="pixel.position" />
+          <Pixel v-for="pixel in leftPixels" :key="pixel.position" :position="pixel.position" :isHorizontal="false" :isReversed="true" />
         </div>
         <div class="flex-1 p-5">
           <div class="w-full flex flex-col gap-5">
-            <div v-for="range in ledStore.ranges" :key="range.id">
-              <p>{{ range.id }}</p>
-              <Slider v-model="range.start" @change="(value: any) => {
-                ledStore.updateRange(range.id, { start: value })
-              }" :min="0" :max="ledStore.pixels.length" />
-              <Slider class="mt-3" v-model="range.end" @change="(value: any) => {
-                ledStore.updateRange(range.id, { end: value })
-              }" :min="0" :max="ledStore.pixels.length" />
-            </div>
+            <template v-if="preferences.isSelectSingleMode">
+
+            </template>
+            <template v-else>
+
+            </template>
           </div>
-
-
         </div>
         <div class="h-full w-4 flex flex-col">
-          <Pixel v-for="pixel in rightPixels" :key="pixel.position" :position="pixel.position" />
+          <Pixel v-for="pixel in rightPixels" :key="pixel.position" :position="pixel.position" :isHorizontal="false" :isReversed="false" />
         </div>
       </div>
       <div class="w-full h-4 flex flex-row-reverse">
-        <Pixel v-for="pixel in bottomPixels" :key="pixel.position" :position="pixel.position" />
+        <Pixel v-for="pixel in bottomPixels" :key="pixel.position" :position="pixel.position" :isHorizontal="true" :isReversed="true" />
       </div>
     </div>
   </div>

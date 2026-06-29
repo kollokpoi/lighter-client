@@ -11,6 +11,8 @@ export interface PixelData {
     selected: boolean;
     active: boolean;
     lastDragTime: number;
+    isFirstSelected: boolean;
+    isLastSelected: boolean;
 }
 
 export function createPixel(position: number) {
@@ -20,5 +22,7 @@ export function createPixel(position: number) {
         color: { r: 0, g: 0, b: 0 },
         active: false,
         lastDragTime: -1,
+        isFirstSelected: false,
+        isLastSelected: false
     });
 }

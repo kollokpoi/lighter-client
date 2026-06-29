@@ -6,7 +6,7 @@ const usePreferencesStore = defineStore('preferences', () => {
     const mouseUpTime = ref(0)
     const mouseDownTime = ref(0)
 
-    const selectMode = ref<SelectItemsMode>(SELECT_ITEMS_MODE.SINGLE)
+    const selectMode = ref<SelectItemsMode>(SELECT_ITEMS_MODE.RANGE)
     const selectedEffect = ref<LightEffects>(LIGHT_EFFECTS.STATIC)
     const isSelectRangeMode = computed(() => selectMode.value === SELECT_ITEMS_MODE.RANGE)
     const isSelectSingleMode = computed(() => selectMode.value === SELECT_ITEMS_MODE.SINGLE)
